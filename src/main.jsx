@@ -4,7 +4,7 @@ import "./index.css"
 import { BrowserRouter } from "react-router-dom"
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
+  <BrowserRouter basename="react-spa-vite-seo-demo">
     <App />
   </BrowserRouter>,
 )
