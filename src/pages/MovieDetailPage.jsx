@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react"
 import { BsStarFill } from "react-icons/bs"
 import { Link, useParams } from "react-router-dom"
-import { Loading, Movies } from "../components"
-import { IMAGE_URL_ORIGINAL, getMovieDetail, getMovieRecommendations, getMovieVideos } from "../utils"
+import { Loading } from "../components"
+import { IMAGE_URL_ORIGINAL, getMovieDetail, getMovieVideos } from "../utils"
 
 export default function MovieDetailPage() {
   const { id } = useParams()
   const [movie, setMovie] = useState(null)
   const [videos, setVideos] = useState(null)
-  const [isHasRecommendation, setIsRecommendation] = useState(null)
 
   useEffect(() => {
     getMovieDetail(id).then(async ({ data }) => {
@@ -19,14 +18,6 @@ export default function MovieDetailPage() {
       setVideos(data)
     })
   }, [id])
-
-  const isHasRecommendationHandler = isHasRecommendation => {
-    setIsRecommendation(isHasRecommendation)
-  }
-
-  const fetchRecommendation = page => {
-    return getMovieRecommendations(id, page ?? 1)
-  }
 
   // return loading
   if (!movie || !videos) {
@@ -68,10 +59,6 @@ export default function MovieDetailPage() {
                     {vote_average.toFixed(2)} <BsStarFill size={16} className="inline" />
                   </p>
                 </span>
-              </span>
-              <span className={`${isHasRecommendation ? "" : "invisible"}`}>
-                <h1 className="text-lg font-semibold">Recommendation</h1>
-                <Movies fetchData={fetchRecommendation} isHasRecommendation={isHasRecommendationHandler} />
               </span>
               <Link to="/" className="bg-slate-800 rounded-sm font-medium py-1 px-3">
                 Back to Home
